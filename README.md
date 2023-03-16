@@ -15,5 +15,5 @@ In order to use report-bot you should:
 
 > **Note:** `setReporterInfo(path)` is going to save your info as "RPRTR . INFO" to the specified path. The ".INFO" extension is faux, it is just a pickled dictionary. Your info is stored as a ".INFO" file only to make it not visible as a plain text. Therefore, you should be aware of lack of credential security when using report-bot. 
 4. Instantiate report-bot with `bot=Reporter(path)`, where path argument is the directory that contains your "RPRTR . INFO".
-5. Use `bot.sendmail(text_message='a message', subject='My Extremely Original Subject', receiver_email='receiver@anymail.com')` to send messages. 
-> **Note:** If you do not specify _subject_ and _receiver_email_ arguments, the default values are going to be used.
+5. Use `bot.sendmail(text_message='a message',img_file='...path2image/imagename.extention', subject='My Extremely Original Subject', receiver_email='receiver@anymail.com')` to send messages. 
+> **Note:** If you do not specify _subject_ and _receiver_email_ arguments, the default values are going to be used. You do not have to attach an image to send an email, you can leave the argument as _None_.
