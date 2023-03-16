@@ -39,7 +39,7 @@ class Reporter():
         # Create a secure SSL context
         self.context = ssl.create_default_context()
 
-    def sendmail(self,text_message,subject=None,receiver_email=None):
+    def sendmail(self,text_message,img_file=None,subject=None,receiver_email=None):
         with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=self.context) as server:
             server.login(self.login_info['sender_email'], self.login_info['password'])
 
@@ -51,13 +51,18 @@ class Reporter():
             body = text_message
             msg.attach(MIMEText(body, 'plain'))
 
-            text = msg.as_string()
+            if img_file is not None:
+                img = MIMEImage(open(img_file, 'rb').read(), _subtype=img_file.split('.')[-1])
+                img.add_header('Content-Disposition', 'attachment', filename=img_file.split('.')[-2])
+                msg.attach(img)
 
-            server.sendmail(self.login_info['sender_email'], msg['To'], text)
+            server.sendmail(self.login_info['sender_email'], msg['To'],  msg.as_string())
+
 
 if __name__ == "__main__":
 
     setReporterInfo('.../path2reporterInfoFolder') # RUN ONCE
 
     bot=Reporter('.../path2reporterInfoFolder')
-    bot.sendmail(text_message='a message', subject='My Extremely Original Subject', receiver_email='receiver@anymail.com')
+    bot.sendmail(text_message='a message',img_file='...path2image/imagename.extention',
+                 subject='My Extremely Original Subject', receiver_email='receiver@anymail.com')
